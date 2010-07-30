@@ -1,0 +1,38 @@
+{% extends "main/base.html" %}
+{% load trans_ru %}
+{% block title %}Регистрация{% endblock %}
+{% block main %}
+<div id="text" class="main">
+{% if message %}
+<p>{{message}}</p>
+{% else %}
+<form method="post" action="/new_user">
+    <p>Для создания новой учётной записи пользователя необходимо указать логин, пароль и существующий адресс электронной почты (на этот адресс будет отправлено письмо подтверждения регистрации).</p>
+    {% if errors %}
+     <p>При создании новой учётной записи произошли следующие ошибки:</p>
+     {% for error in errors %}
+        <p class="error">{{error}}</p>
+     {% endfor %}
+      <p>Пожалуйста, исправьте их:</p>
+    {% endif %}
+    <p>
+    <center>
+    <table>
+    <tr>
+    <td><label for="id_username">Логин</label></td><td><input type="text" id="id_username" maxlength='30' name="username" value="{{username}}"></td>
+    </tr><tr>
+    <td><label for="id_password">Пароль</label></td><td><input type="password" id="id_password" maxlength='30' name="password"/></td>
+    </tr><tr>
+    <td><label for="id_email">e-mail</label></td><td><input type="text" id="id_email" maxlength='100' name="email" value="{{email}}"/></td>
+    </tr><tr>
+    <td colspan="100%" style="text-align: center;">
+    <input type="submit" value="Зарегистрировать"/>
+    </td>
+    </tr>
+    </table>
+    </center>
+    </p>
+</form>
+{% endif %}
+</div>
+{% endblock %}

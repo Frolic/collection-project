@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="en">
+	<head>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<link type="text/css" href="css/main.css" rel="stylesheet" />
+    	<link type="text/css" href="css/main1.css" rel="stylesheet" />
+		
+		<title>
+			{% block title %}{% endblock %}
+		</title>
+		<script language="javascript" src="../js/ajax.js"></script>		
+		<script language="javascript">
+			function show_bar(ev,name) {
+				MouseX = ev.clientX + document.body.scrollLeft;
+				MouseY = ev.clientY + document.body.scrollTop;
+				obj = document.getElementById(name);
+				obj.style.top = MouseY + 10;
+				obj.style.left = MouseX;
+				showDiv(name);
+				}
+			function hide_bar() {
+				document.getElementById("win").style.visibility="hidden"
+				}
+			function saveProfile(){
+    			params="?catalogue="+document.getElementById("profile_catalogue").value+"&theme="+document.getElementById("cssSelector").value;
+    			allcolumns='FCIYSDM';
+    			selcolumns='';
+    			for (var q=0;q<allcolumns.length;q++){
+            		if (document.getElementById('check'+allcolumns.charAt(q)).checked)
+                	selcolumns+=allcolumns.charAt(q);}
+    			params+="&catalogue_columns="+selcolumns;
+    			execCommand("/user_settings/save"+params);
+    			hideDiv("profileDiv");
+    			document.location.reload(true);
+    			}
+			function changeCSS(q,v){
+				if (v<0)
+   					v=document.getElementById("cssSelector").value;
+					for (a=0;a<document.styleSheets.length;a++){
+						document.styleSheets[a].disabled=true;
+						document.styleSheets[v].disabled=false;
+						if (q) execCommand('/user_settings/save/'+v);
+						}
+				}
+		</script>
+		{% block header %}{% endblock %}	
+	</head>
+
+
+<body>
+<div id="content">
+<div class="header">
+
+<div class="menuKontaktSub">
+<ul>
+  <li><a href="/">Главная</a></li>
+  <li><a href="/ideas">Идеи</a></li>
+{% if user.is_authenticated %}
+  <li><a href="/katalog{{profile.default_catalogue}}">Моя коллеция</a></li>
+{% endif %}
+  <li><a href="/katalog">Каталог</a></li>
+  <li><a href="">Библиотека</a></li>
+  <li><a href="">Форум</a></li>
+  <li><a href="">Справка</a></li>
+{% if user.is_authenticated %}
+  <li><a href="javascript:hideshowDiv('profileDiv');">Профиль</a></li>
+{% else %}
+  <script>
+    changeCSS(0,0);
+  </script>
+{% endif %}
+</ul>
+
+<div class="enter">{% if user.is_authenticated %}Вы вошли как {{user}}. <a href="../logout" style="color:#ccc;">Выйти</a>{% endif %}
+{% if user.is_anonymous %}<a style='cursor: pointer; font-weight:bold; ' onclick='show_bar(event,"win")'>Войти</a> <a href="../new_user" style="font-size:11px;">Зарегистрироваться</a>{% endif %}
+
+
+<div id=win class=bar style="color:#000000; font-family:sans-serif; font-size:13px; font-weight:bold;">
+<div align=right>
+<span style='cursor: pointer' title='Закрыть' onclick='hideDiv("win")'>x</span>
+</div>
+<form method="post" class="login-form" action="/login">
+    <div class="wide" >
+    <table width="100%">
+    <tr>
+    <td><label for="id_username">Логин</label></td><td><input type="text" id="id_username" name="username" style="width: 100%"/></td>
+    </tr><tr>
+    <td><label for="id_password">Пароль</label></td><td><input type="password" id="id_password" name="password" style="width: 100%"/></td>
+    </tr>
+    <tr>
+    <td style="text-align: center;" colspan="100%"><input type="submit" value="войти" style="width: 100px"/></td>
+    </tr>
+    </table>
+    </div>
+    <input type="hidden" value="" name="next"/>
+</form>
+<p style="text-align: right; font-size: 9pt;"><a href="/account/reset_password/">Я забыл пароль</a></p>
+</div>
+
+</div>
+</div>
+
+<div id="quickSearch">
+ <div id="qquery" style="width: 105px;">
+  <input value="Поиск" placeholder="Поиск" name="q" onblur="searchOut(this)" onfocus="searchOn(this)" onkeyup="friendFilter(event)" autocomplete="off" id="qinput" style="width: 85px; color: rgb(119, 119, 119);"/><span id="qchoose"/>
+ </div>
+</div>
+
+</div>
+
+{% if user.is_authenticated %}
+<div id="profileDiv" class="bar" style="color:#000000; font-family:sans-serif; font-size:13px; font-weight:bold;">
+<div align=right>
+<span style='cursor: pointer' title='Закрыть' onclick='hideDiv("profileDiv")'>x</span>
+</div>
+<form method="post" action="/save_profile">
+    <div class="wide" >
+    <table width="100%">
+    <tr>
+        <td>
+            <label for="profile_theme">Оформление</label>
+        </td>
+        <td>
+            <select onChange="javascript:changeCSS(1,-1);" id="cssSelector" name="profile_theme">
+                <option value="0">main.css</option>
+                <option value="1">main1.css</option>
+            </select>
+        </td>
+        <script>
+            q=document.getElementById('cssSelector');
+            q.value='{{profile.theme}}';
+            changeCSS(0,-1);
+        </script>
+    </tr>
+    <tr>
+        <td>
+            <label for="profile_catalogue">Вид каталога</label>
+        </td>
+        <td>
+            <select id="profile_catalogue" name="profile_catalogue">
+                <option value="C">Карточки</option>
+                <option value="T" >Таблица</option>
+            </select>
+            <script>
+                q=document.getElementById('profile_catalogue');
+                q.value='{{profile.catalogue}}';
+            </script>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="100%">
+            В каталоге показывать:
+        </td>
+    </tr>
+    <tr>
+        <td colspan="100%">
+            <input type="checkbox" id='checkF'>Фотографии
+        </td>
+    </tr>
+    <tr>
+        <td colspan="100%">
+            <input type="checkbox" id='checkC'>Страну
+        </td>
+    </tr>
+    <tr>
+        <td colspan="100%">
+            <input type="checkbox" id='checkI'>Год выпуска
+        </td>
+    </tr>
+    <tr>
+        <td colspan="100%">
+            <input type="checkbox" id='checkY'>Годы чеканки
+        </td>
+    </tr>
+    <tr>
+        <td colspan="100%">
+            <input type="checkbox" id='checkS'>Серию
+        </td>
+    </tr>
+    <tr>
+        <td colspan="100%">
+            <input type="checkbox" id='checkD'>Номинал
+        </td>
+    </tr>
+    <tr>
+        <td colspan="100%">
+            <input type="checkbox" id='checkM'>Метал
+        </td>
+
+        
+    </tr>
+    <script>
+       catalogue_columns='{{profile.catalogue_columns}}';
+       allcolumns='FCIYSDM';
+       for (var q=0;q<allcolumns.length;q++){
+            document.getElementById('check'+allcolumns.charAt(q)).checked=false;
+       }
+       for (var q=0;q<catalogue_columns.length;q++){
+            document.getElementById('check'+catalogue_columns.charAt(q)).checked=true;
+       }
+    </script>
+
+    <tr>
+        <td style="text-align: center;" colspan="100%">
+            <input type="button" value="Применить" style="width: 100px" onclick="saveProfile()" />
+        </td>
+    </tr>
+    </table>
+    </div>
+</form>
+</div>
+{% endif %}
+
+
+ {% block column %}{% endblock %}
+
+{% block main %}{% endblock %}
+
+<div id="footer" style="clear:both; background-color: #C1C1C1;">
+   2008-2009
+</div>
+</div>
+  </body>
+</html>

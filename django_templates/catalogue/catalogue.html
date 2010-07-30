@@ -1,0 +1,94 @@
+{% load trans_ru %}
+{% load thumbnail %}
+
+{% block results %}
+<!-- Результаты -->
+{% if coins.count %}
+Страницы:
+{% if page.has_previous %}
+	<a href="javascript:void(0)" onclick="javascript:showAJAXinTip('{% url custom_list %}?id={{id}}&page=1','text');">1</a>
+	<a href="javascript:void(0)" onclick="javascript:showAJAXinTip('{% url custom_list %}?id={{id}}&page={{page.previous_page_number}}','text');"> &lt;&lt; </a> 
+{% endif %}
+<span> {{ page.number }} </span>
+{% if page.has_next %}
+	<a href="javascript:void(0)" onclick="javascript:showAJAXinTip('{% url custom_list %}?id={{id}}&page={{page.next_page_number}}','text');"> &gt;&gt; </a>
+	<a href="javascript:void(0)" onclick="javascript:showAJAXinTip('{% url custom_list %}?id={{id}}&page={{page.paginator.num_pages}}','text');">{{ page.paginator.num_pages }}</a> 
+{% endif %}
+
+
+<div id="rahmenTablett">
+	<table cellspacing="0" border="0" cols="0">
+		<tr> 
+    	{% for coin in coins %}
+			<td style="vertical-align:top;" class="tabelement tabelementall" onmouseover="javascript:this.className='tabelementOn'" onmouseout="javascript:this.className='tabelement'">
+			{% if user.is_authenticated %}
+			    <a href="{% url add_to_catalogue coin.id %}"> 
+    				Добавить в ваш каталог.
+    			</a>
+    		{% endif %}
+			{% if profile.catalogue_columns|contains:"F" %}
+		    	<div class="absatz">
+    				{% thumbnail coin.foto_obverse 120x120 autocrop as obverse %}
+    				<center>
+    					<img style="display: block;" name="imgObverse" id="imgObverse{{forloop.counter}}" onclick="javascript:reverseCoin({{forloop.counter}})" height="120" width="120"  title="obverse" alt="obverse" src="{{obverse.absolute_url|img_path2url}}"/>
+    					{% thumbnail coin.foto_reverse 120x120 autocrop as obverse %}
+    					<img style="display: none;" name="imgReverse" id="imgReverse{{forloop.counter}}" onclick="javascript:reverseCoin({{forloop.counter}})" height="120" width="120" title="reverse" alt="reverse" src="{{obverse.absolute_url|img_path2url}}"/>
+    				</center>
+    				<!--img height="120" width="119"  title="obverse" alt="obverse" src="{{coin.foto_obverse|img_path2url}}"/>
+    				<img height="120" width="119" title="reverse" alt="reverse" src="{{coin.foto_reverse|img_path2url}}"/-->
+    			</div>
+			{% endif %}
+			{% if profile.catalogue_columns|contains:"D" %}
+    			<div class="absatz">
+        			<div class="parameter">Номинал:</div>
+        			<div class="beschreibung">{{coin.denomination}}</div>
+    			</div>
+			{% endif %}
+			{% if profile.catalogue_columns|contains:"C" %}
+    			<div class="absatz">
+        			<div class="parameter">Страна:</div>
+        			<div class="beschreibung">{{coin.country}}</div>
+    			</div>
+			{% endif %}
+			{% if profile.catalogue_columns|contains:"S" %}
+    			<div class="absatz">
+        			<div class="parameter">Серия:</div>
+        			<div class="beschreibung">{{coin.seria}}</div>
+    			</div>
+			{% endif %}
+			{% if profile.catalogue_columns|contains:"Y" %}
+    			<div class="absatz">
+        			<div class="parameter">Годы чеканки:</div>
+        			<div class="beschreibung">{{coin.years_of_coinage.all|join:", "}}</div>
+    			</div>
+			{% endif %}
+			{% if profile.catalogue_columns|contains:"I" %}
+    			<div class="absatz">
+        			<div class="parameter">Год выпуска:</div>
+        			<div class="beschreibung">{{coin.date_of_issue}}</div>
+    			</div>
+			{% endif %}
+			{% if profile.catalogue_columns|contains:"M" %}
+    			<div class="absatz">
+        			<div class="parameter">Металл:</div>
+        			<div class="beschreibung">{{coin.metal}}</div>
+    			</div>
+			{% endif %}
+   			<div class="absatz">
+       			<a href="{% url coin_info coin.id %}">Подробнее</div>
+   			</div>
+    		{% ifequal forloop.counter 5 %}
+        		</tr><tr>
+    		{% endifequal %}
+    	{% endfor %}
+		</tr>
+	</table>
+{% else %}
+	{% ifequal profile.default_catalogue.id id %}
+		Ваша коллекция пуста.
+	{% else %}
+		Поиск не дал результатов.
+	{% endifequal %}
+{% endif %}
+</div>
+{% endblock %}

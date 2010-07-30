@@ -1,0 +1,46 @@
+{% load trans_ru %}
+       <div class="bar" name="zamena{{article_id}}" id="zamena{{article_id}}">
+       {% if user.is_authenticated %}[<a style='cursor: pointer; font-weight:bold;' onclick="showAJAXinTip('/comments/{{article_id}}','comments{{article_id}}'); document.location='#qwe{{article_id}}'">Добавить комментарий</a>]{% endif %}
+       [{% if comments.count %}<a style='cursor: pointer; font-weight:bold;' onclick="showAJAXinTip('/comments/{{article_id}}','comments{{article_id}}')">{% endif %}{{comments.count|tr_comment}}{% if comments.count %}</a>{% endif %}]
+        </div> 
+        [{{comments.count|tr_comment}}] [<a style='cursor: pointer; font-weight:bold;' onclick="document.getElementById('comments{{article_id}}').innerHTML=document.getElementById('zamena{{article_id}}').innerHTML">скрыть</a>]<br />
+        <dl>
+            {% for comment in comments %}
+                <div style="position: relative;">
+                    <div name="btnhide{{comment.id}}" id="btnhide{{comment.id}}" style="position:absolute; left: 0%; top: 0%; z-index:90; width: 100%;">
+                       <img onclick="hideDiv('com{{comment.id}}');hideDiv('btnhide{{comment.id}}');showDiv('btnshow{{comment.id}}');q=getDiv('com{{comment.id}}');document.getElementById('btnhide{{comment.id}}').lastheight=q.height; q.height=0;" src="/img/pointerg.png" title="свернуть" alt="свернуть" width="14" height="14" hspace="5" vspace="3" align="top" border="0"/>                 
+                    </div>
+                    <div name="btnshow{{comment.id}}" id="btnshow{{comment.id}}" style="visibility: hidden; visibility: hide; position:absolute; left: 0%; top: 0%; z-index:80; width: 100%;">
+                       <img onclick="showDiv('com{{comment.id}}');showDiv('btnhide{{comment.id}}');hideDiv('btnshow{{comment.id}}');q=getDiv('com{{comment.id}}');q.height=document.getElementById('btnhide{{comment.id}}').lastheight;" src="img/pointergh.png" title="открыть" alt="открыть" width="14" height="14" hspace="5" vspace="3" align="top" border="0"/>                 
+                    </div>
+                </div>
+<br />
+                <div style="position: relative;" name="com{{comment.id}}" id="com{{comment.id}}"><p>{{comment.body}}</p>
+                <p class="comment_date"><a class="commentator" href="id.." title="показать профиль пользователя">{{comment.author}}</a> {{comment.pub_date}}</p>
+                </div>
+            {% endfor %}
+        </dl>
+        <a name="qwe{{article_id}}"/>
+       
+            <!--form action="../add_comment" method=post-->
+               <!--input type="hidden" name="article_id" value="{{article_id}}"></input-->
+               <!--textarea name="comment_text" id="comment_text" wrap="virtual" cols="100" rows="3" style='width: 80%'>Ведите ваш коментарий...</textarea><br-->
+
+                {% autoescape off %}
+                {{ form.comment_text }}
+                    {% for error in form.comment_text.errors %}
+                        <p><strong>{{ error|escape }}</strong></p>
+                    {% endfor %}
+                <br />
+                {{ form.captcha }}         
+
+                   
+                    {% for error in form.captcha.errors %}
+                        <p><strong>{{ error|escape }}</strong></p>
+                    {% endfor %}
+
+                    
+               <button onclick="showAJAXinTip('/add_comment?article_id={{article_id}}&amp;captcha='+document.getElementsByName('captcha')[0].value+'&amp;captcha='+document.getElementsByName('captcha')[1].value+'&amp;comment_text='+document.getElementById('id_comment_text').value,'comments{{article_id}}')">Добавить</button>
+                {% endautoescape %}
+            <!--/form-->
+        

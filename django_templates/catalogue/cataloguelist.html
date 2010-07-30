@@ -1,0 +1,105 @@
+
+{% load trans_ru %}
+{% load thumbnail %}
+
+{% if coins.count %}
+Страницы:
+{% if page.has_previous %}
+	<a href="javascript:void(0)" onclick="javascript:showAJAXinTip('{% url custom_list %}?id={{id}}&page=1','text');">1</a>
+	<a href="javascript:void(0)" onclick="javascript:showAJAXinTip('{% url custom_list %}?id={{id}}&page={{page.previous_page_number}}','text');"> &lt;&lt; </a> 
+{% endif %}
+<span> {{ page.number }} </span>
+{% if page.has_next %}
+	<a href="javascript:void(0)" onclick="javascript:showAJAXinTip('{% url custom_list %}?id={{id}}&page={{page.next_page_number}}','text');"> &gt;&gt; </a>
+	<a href="javascript:void(0)" onclick="javascript:showAJAXinTip('{% url custom_list %}?id={{id}}&page={{page.paginator.num_pages}}','text');">{{ page.paginator.num_pages }}</a> 
+{% endif %}
+{% endif %}
+<div id="rahmenTablett">
+  <table cellspacing="0" border="0" cols="0" width="100%">
+    <tr>
+		{% if profile.catalogue_columns|contains:"F" %}
+        <td></td>
+		{% endif %}
+
+		{% if profile.catalogue_columns|contains:"D" %}
+        <td>Номинал</td>
+		{% endif %}
+
+		{% if profile.catalogue_columns|contains:"C" %}
+    	<td>Страна</td>
+		{% endif %}
+
+{% if profile.catalogue_columns|contains:"S" %}
+    <td>Серия</td>
+{% endif %}
+
+{% if profile.catalogue_columns|contains:"I" %}
+    <td>Год выпуска</td>
+{% endif %}
+
+{% if profile.catalogue_columns|contains:"Y" %}
+    <td>Годы чеканки</td>
+{% endif %}
+
+{% if profile.catalogue_columns|contains:"M" %}
+    <td>Металл</td>
+{% endif %}
+
+    </tr>
+{% for coin in coins %}
+   <tr> 
+
+{% if profile.catalogue_columns|contains:"F" %}
+    <td style="vertical-align:top;" class="{% cycle 'tabelementOn' 'tabelement' %}" >
+        {% thumbnail coin.foto_obverse 120x120 autocrop as obverse %}
+        <img style="display: block;" name="imgObverse" id="imgObverse{{forloop.counter}}" onclick="javascript:reverseCoin({{forloop.counter}})" height="120" width="120"  title="obverse" alt="obverse" src="{{obverse.absolute_url|img_path2url}}"/>
+        {% thumbnail coin.foto_reverse 120x120 autocrop as obverse %}
+        <img style="display: none;" name="imgReverse" id="imgReverse{{forloop.counter}}" onclick="javascript:reverseCoin({{forloop.counter}})" height="120" width="120" title="reverse" alt="reverse" src="{{obverse.absolute_url|img_path2url}}"/>
+    </td>
+    <!--img height="120" width="119"  title="obverse" alt="obverse" src="{{coin.foto_obverse|img_path2url}}"/>
+    <img height="120" width="119" title="reverse" alt="reverse" src="{{coin.foto_reverse|img_path2url}}"/-->
+    {% endif %}
+{% if profile.catalogue_columns|contains:"D" %}
+<td class="{% cycle 'tabelementOn' 'tabelement' %}">
+        {{coin.denomination}}
+    </td>
+{% endif %}
+{% if profile.catalogue_columns|contains:"C" %}
+    <td class="{% cycle 'tabelementOn' 'tabelement' %}">    
+        
+        {{coin.country}}
+    </td>
+{% endif %}
+{% if profile.catalogue_columns|contains:"S" %}
+    <td class="{% cycle 'tabelementOn' 'tabelement' %}">
+        
+        {{coin.seria}}
+    </td>
+{% endif %}
+{% if profile.catalogue_columns|contains:"I" %}
+    <td class="{% cycle 'tabelementOn' 'tabelement' %}">
+        
+       {{coin.date_of_issue}}
+    </td>
+{% endif %}
+{% if profile.catalogue_columns|contains:"Y" %}
+    <td class="{% cycle 'tabelementOn' 'tabelement' %}">
+        
+        {{coin.years_of_coinage.all|join:", "}}
+    </td>
+{% endif %}
+{% if profile.catalogue_columns|contains:"M" %}
+    <td class="{% cycle 'tabelementOn' 'tabelement' %}">
+        
+       {{coin.metal}}
+    </td>
+{% endif %}
+
+   </tr> 
+    {% endfor %}
+   
+  </table>
+    {% if not coins.count %}
+    По вашему запросу ничего не найдено!
+    {% endif %}
+</div>

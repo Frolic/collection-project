@@ -1,0 +1,56 @@
+{% extends "main/base.html" %}
+{% load trans_ru %}
+{% block title %}Предложения{% endblock %}
+{% block main %}
+<div id="text" class="main">
+<!--Предложения-->
+{% if user.is_authenticated %}
+    <div class="element">
+        <form name="IdeaAdder" action="/idea/add_idea" method="post">
+            <div>Добавить своё предложение по программе:</div>
+            Заголовок: <input name="idea_header" id="idea_header" maxlength='250' value="Введите заголовок"></input>
+            <textarea name="idea_text" id="idea_text" wrap="virtual" cols="100" rows="3" style='width: 80%'>Введите вашe предложение...</textarea><br>
+            <input type="submit" value="Отправить"></input>
+        </form>
+    </div>
+{% endif %}
+    {% for idea in ideas %}
+    <div class="element">
+    <a href="" class="main_menu_link">{{idea.title}}</a> 
+    <table>
+    <tr>
+    <td>
+    Рейтинг:
+    </td>
+    <td>
+        <div name="reat{{idea.id}}" id="reat{{idea.id}}">{{idea.reat}}</div>
+    </td>
+    <td>
+        <a href="javascript:showAJAXinTip('/vote/up/{{idea.id}}','reat{{idea.id}}')" title="проголосовать за" style="color: green;" ><img src="img/pointerup.png" alt="+" width="18" height="18" hspace="5" vspace="3" align="top" border="0"/></a>
+    </td>
+    <td>
+        /
+    </td>
+    <td>
+        <a href="javascript:showAJAXinTip('/vote/down/{{idea.id}}','reat{{idea.id}}')" title="проголосовать против" style="color: red;"><img src="img/pointerdown.png" alt="-" width="18" height="18" hspace="5" vspace="3" align="top" border="0"/></a>
+    </td>
+    </tr>
+    </table>
+    <p>{{idea.body|linebreaks}}</p> 
+        <div class="comment" name="comments{{idea.id}}" id="comments{{idea.id}}">
+            [<a style='cursor: pointer; font-weight:bold;' onclick="showAJAXinTip('/idea/comments/{{idea.id}}','comments{{idea.id}}'); document.location='#qwe{{idea.id}}'">Добавить комментарий</a>]
+            [{% if idea.idea_comment_set.all.count %}<a style='cursor: pointer; font-weight:bold;' onclick="showAJAXinTip('/idea/comments/{{idea.id}}','comments{{idea.id}}')">{% endif %}{{idea.idea_comment_set.all.count|tr_comment}}{% if idea.idea_comment_set.all.count %}</a>{% endif %}]
+       </div>
+    </div>
+    {% endfor %}
+    <!--конец отобажения коментариев-->
+    <!--Форма ввода коментария-->
+
+      
+      <!--конец формы ввода коментария-->
+      <!--div class="element">
+<a href="" class="main_menu_link">Новость</a>   
+      <p>Описание предложения фигня всякая, и еще что небудь.</p><a class="comment" href="" title="просмотреть комментарии и проокоментировать">0 комент.</a></div>
+<Конец предложений-->
+</div>
+{% endblock %}

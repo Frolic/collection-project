@@ -1,0 +1,296 @@
+{% extends "main/base.html" %}
+{% load trans_ru %}
+
+{% block title %}Каталог{% endblock %}
+
+{% block header %}
+	<script src='js/catalogue.js'></script>
+{% endblock %}
+
+{% block column %}
+<div class="menuKontaktSub">
+	<ul id="kat_funktion">
+		<li>
+			<a href="javascript:reverseCoins();">Перевернуть монеты</a>
+		</li>
+		<li>
+			<a href="javascript:hideshowDiv('filterDiv');">Фильтр</a>
+		</li>
+		<li>
+			<a href="javascript:hideshowDiv('orderDiv');">Упорядочить</a>
+		</li>
+		<li>
+			<a href="javascript:hideshowDiv('dateConvertDiv');selectKeyBoard();">Конвертер дат</a>
+		</li>
+		</ul>
+</div>
+{% endblock %}
+
+{% block main %}
+<div style="display:block;"> <!--начало панели-->
+
+<div id="dateConvertDiv" name="dateConvertDiv" class="bar" style="color:#000000; font-family:sans-serif; font-size:13px; font-weight:bold;">
+<div align=right>
+<span style='cursor: pointer' title='Закрыть' onclick='hideDiv("dateConvertDiv");hideDiv("displayKeyboard"+document.getElementById("keyboardType").value);'>x</span>
+</div>
+<select id="keyboardType" name="keyboardType" onchange="javascript:selectKeyBoard();">
+<option value="0" selected>Moslem Solar Date [SH]</option>
+<option value="1">Moslem Lunar Date (Heijra) [AH]</option>
+<option value="2">Hebrew Date [JE]</option>
+<option value="3">Japanese Date</option>
+<option value="4">Thai Date (Buddhist) [BE]</option>
+<option value="5">Bengali Dates (Bangladesh)</option>
+<option value="6">Mongolian Dates</option>
+<option value="7">Nepali Dates - Bikram Samvat Era [VS]</option>
+</select>
+<input id="inputDate" name="inputDate" style="width: 100px; background-color: white;" readonly="readonly"></input>=<input id="outputDate" name="outputDate" style="width: 100px;  background-color: white;"></input><br />
+<input id="hidenInputDate" type="hidden" />
+<input type="button" onclick="javascript:clearLastInputDate();" value="&lt;-" />
+<input type="button" onclick="javascript:clearInputDate();" value="clear" />
+<div id="keyBoardsContainer" name="keyBoardsContainer" style="position: relative;">
+<div id="displayKeyboard0" name="displayKeyboard0" style="position: relative">
+<input type="button" onclick="javascript:enterNumberIntoInputDate('١','1');" value="١" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('٢','2');" value="٢" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('٣','3');" value="٣" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('٤','4');" value="٤" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('٥','5');" value="٥" />
+<br />
+<input  type="button" onclick="javascript:enterNumberIntoInputDate('٦','6');" value="٦" />
+<input  type="button" onclick="javascript:enterNumberIntoInputDate('٧','7');" value="٧" />
+<input  type="button" onclick="javascript:enterNumberIntoInputDate('٨','8');" value="٨" />
+<input  type="button" onclick="javascript:enterNumberIntoInputDate('٩','9');" value="٩" />
+<input  type="button" onclick="javascript:enterNumberIntoInputDate('٠','0');" value="٠" />
+</div>
+
+<div id="displayKeyboard1" name="displayKeyboard1" style="position: relative">
+<input type="button" onclick="javascript:enterNumberIntoInputDate('١','1');" value="١" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('٢','2');" value="٢" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('٣','3');" value="٣" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('٤','4');" value="٤" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('٥','5');" value="٥" />
+<br />
+<input  type="button" onclick="javascript:enterNumberIntoInputDate('٦','6');" value="٦" />
+<input  type="button" onclick="javascript:enterNumberIntoInputDate('٧','7');" value="٧" />
+<input  type="button" onclick="javascript:enterNumberIntoInputDate('٨','8');" value="٨" />
+<input  type="button" onclick="javascript:enterNumberIntoInputDate('٩','9');" value="٩" />
+<input  type="button" onclick="javascript:enterNumberIntoInputDate('٠','0');" value="٠" />
+</div>
+
+<div id="displayKeyboard2" name="displayKeyboard2" style="position: relative;">
+<input type="button" onclick="javascript:enterNumberIntoInputDate('א');" value="c" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('ב');" value="ב" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('ג');" value="ג" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('ד');" value="ד" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('ה');" value="ה" />
+<br />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('ו');" value="ו" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('ז');" value="ז" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('ח');" value="ח" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('ט');" value="ט" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('י');" value="י" />
+<br />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('כ');" value="כ" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('ל');" value="ל" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('מ');" value="מ" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('נ');" value="נ" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('ס');" value="ס" />
+<br />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('ע');" value="ע" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('פ');" value="פ" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('צ');" value="צ" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('ק');" value="ק" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('ר');" value="ר" />
+<br />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('ש');" value="ש" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('ת');" value="ת" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('׳');" value="׳" />
+</div>
+
+<div id="displayKeyboard3" name="displayKeyboard3" style="position: relative">
+<input type="button" onclick="javascript:enterNumberIntoInputDate('乎');" value="乎" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('NOTFOUND');" value="NOTFOUND" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('⼀');" value="⼀" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('二');" value="二" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('三');" value="三" />
+<br />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('昭');" value="昭" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('NOTFOUND');" value="NOTFOUND" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('㆕');" value="㆕" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('五');" value="五" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('六');" value="六" />
+<br />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('⼤');" value="⼤" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('世');" value="世" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('七');" value="七" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('⺇');" value="⺇" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('九');" value="九" />
+<br />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('明');" value="明" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('治');" value="治" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('⼗');" value="⼗" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('元');" value="元" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('NOTFOUND');" value="NOTFOUND" />
+</div>
+
+<div id="displayKeyboard4" name="displayKeyboard4" style="position: relative">
+<input type="button" onclick="javascript:enterNumberIntoInputDate('๑','1');" value="๑" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('๒','2');" value="๒" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('๓','3');" value="๓" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('๔','4');" value="๔" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('๕','5');" value="๕" />
+<br />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('๖','6');" value="๖" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('๗','7');" value="๗" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('๘','8');" value="๘" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('๙','9');" value="๙" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('๐','0');" value="๐" />
+</div>
+
+<div id="displayKeyboard5" name="displayKeyboard5" style="position: relative">
+<input type="button" onclick="javascript:enterNumberIntoInputDate('১','1');" value="১" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('২','2');" value="২" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('৩','3');" value="৩" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('৪','4');" value="৪" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('৫','5');" value="৫" />
+<br />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('৬','6');" value="৬" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('৭','7');" value="৭" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('৮','8');" value="৮" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('৯','9');" value="৯" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('০','0');" value="০" />
+</div>
+
+<div id="displayKeyboard6" name="displayKeyboard6" style="position: relative">
+<input type="button" onclick="javascript:enterNumberIntoInputDate('&#1811;','1');" value="&#1811;" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('&#1812;','2');" value="&#1812;" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('&#1813;','3');" value="&#1813;" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('&#1814;','4');" value="&#1814;" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('&#1815;','5');" value="&#1815;" />
+<br />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('&#1816;','6');" value="&#1816;" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('&#1817;','7');" value="&#1817;" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('&#1818;','8');" value="&#1818;" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('&#1819;','9');" value="&#1819;" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('&#1810;','0');" value="&#1810;" />
+</div>
+
+<div id="displayKeyboard7" name="displayKeyboard7" style="position: relative">
+<input type="button" onclick="javascript:enterNumberIntoInputDate('1');" value="1" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('2');" value="2" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('3');" value="3" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('4');" value="4" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('5');" value="5" />
+<br />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('6');" value="6" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('7');" value="7" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('8');" value="8" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('9');" value="9" />
+<input type="button" onclick="javascript:enterNumberIntoInputDate('0');" value="0" />
+</div>
+
+</div>
+
+</div>
+
+
+<div id="orderDiv" class="bar" style="color:#000000; font-family:sans-serif; font-size:13px; font-weight:bold;">
+<div align=right>
+<span style='cursor: pointer' title='Закрыть' onclick='hideDiv("orderDiv")'>x</span>
+</div>
+<form method="post" action="/order">
+    <div class="wide" >
+    <table width="100%">
+    <tr>
+        <td>
+            1.
+        </td>
+        <td>
+            <select name="order1_name" id="order1_name">
+                <option value="">None</option>
+                <option value="denomination">Номинал</option>
+                <option value="country">Страна</option>
+                <option value="seria">Серия</option>
+                <option value="metal">Метал</option>
+                <option value="coinage">Даты чеканки</option>
+            </select>
+        </td>
+        <td>
+            <select name="order1_how" id="order1_how">
+                <option value="">По возрастанию</option>
+                <option value="-">По убыванию</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            2.
+        </td>
+        <td>
+            <select name="order2_name" id="order2_name">
+                <option value="">None</option>
+                <option value="denomination">Номинал</option>
+                <option value="country">Страна</option>
+                <option value="seria">Серия</option>
+                <option value="metal">Метал</option>
+                <option value="coinage">Даты чеканки</option>
+            </select>
+        </td>
+        <td>
+            <select name="order2_how" id="order2_how">
+                <option value="">По возрастанию</option>
+                <option value="-">По убыванию</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            3.
+        </td>
+        <td>
+            <select name="order3_name" id="order3_name">
+                <option value="">None</option>
+                <option value="denomination">Номинал</option>
+                <option value="country">Страна</option>
+                <option value="seria">Серия</option>
+                <option value="metal">Метал</option>
+                <option value="coinage">Даты чеканки</option>
+            </select>
+        </td>
+        <td>
+            <select name="order3_how" id="order3_how">
+                <option value="">По возрастанию</option>
+                <option value="-">По убыванию</option>
+            </select>
+        </td>
+    </tr>
+    <tr><td style="text-align: center;" colspan="100%"><input type="button" value="Применить" style="width: 100px" onclick="orderCoins()" /></td></tr>
+    </table>
+    </div>
+</form>
+</div>
+
+
+<div id="filterDiv" class="bar" style="color:#000000; font-family:sans-serif; font-size:13px; font-weight:bold;">
+<div align=right>
+<span style='cursor: pointer' title='Закрыть' onclick='hideDiv("filterDiv")'>x</span>
+</div>
+<form method="post" action="/filter">
+    <div class="wide" >
+    <table width="100%">
+    <tr><td><label for="filter_denomination">Номинал</label></td><td><input type="text" id="filter_denomination" name="filter_denomination" style="width: 100%"/></td></tr>
+    <tr><td><label for="filter_country">Страна</label></td><td><select id="filter_country" name="filter_country"><option value="-1" selected>[Все]</option>{% for country in countries %}<option value="{{country.id}}">{{country}}</option>{% endfor %}</select></td></tr>
+    <tr><td><label for="filter_seria">Серия</label></td><td><select id="filter_seria" name="filter_seria"><option value="-1" selected>[Все]</option>{% for q in serias %}<option value="{{q.id}}">{{q}}</option>{% endfor %}</select></td></tr>
+    <tr><td><label for="filter_metal">Металл</label></td><td><select id="filter_metal" name="filter_metal"><option value="-1" selected>[Все]</option>{% for q in metals %}<option value="{{q.id}}">{{q}}</option>{% endfor %}</select></td></tr>
+    <tr><td><label for="filter_coinage">Чеканилась в</label></td><td><input id="filter_coinage" name="filter_coinage" /></td></tr>
+    <tr><td style="text-align: center;" colspan="100%"><input type="button" value="Применить" style="width: 100px" onclick="filterCoins()" /></td></tr>
+    </table>
+    </div>
+</form>
+</div>
+</div> <!--конец панели-->
+<div id="text" name="text" class="main">
+</div>
+<script>
+showAJAXinTip("/katalog/coins?clear","text");
+</script>
+{% endblock %}

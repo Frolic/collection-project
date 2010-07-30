@@ -1,0 +1,28 @@
+{% extends "main/base.html" %}
+{% load trans_ru %}
+{% block title %}Главная{% endblock %}
+{% block main %}
+<div id="text" class="main">
+<!--Предложения-->
+    {% for article in news %}
+    <div class="element">
+	<a href="" class="main_menu_link">{{article.title}}</a> 
+    <p>{{article.body|linebreaks}}</p>
+        
+        <div class="comment" name="comments{{article.id}}" id="comments{{article.id}}">
+           [<a style='cursor: pointer; font-weight:bold;' onclick="showAJAXinTip('/comments/{{article.id}}','comments{{article.id}}'); document.location='#qwe{{article.id}}'">Добавить комментарий</a>]
+            [{% if article.comment_set.all.count %}<a style='cursor: pointer; font-weight:bold;' onclick="showAJAXinTip('/comments/{{article.id}}','comments{{article.id}}')">{% endif %}{{article.comment_set.all.count|tr_comment}}{% if article.comment_set.all.count %}</a>{% endif %}]
+       </div>
+    </div>
+    {% endfor %}
+    <!--конец отобажения коментариев-->
+    <!--Форма ввода коментария-->
+
+      
+      <!--конец формы ввода коментария-->
+      <!--div class="element">
+<a href="" class="main_menu_link">Новость</a>	
+      <p>Описание предложения фигня всякая, и еще что небудь.</p><a class="comment" href="" title="просмотреть комментарии и проокоментировать">0 комент.</a></div>
+<Конец предложений-->
+</div>
+{% endblock %}

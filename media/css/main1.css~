@@ -1,0 +1,332 @@
+* {
+margin:0;
+padding:0;
+}
+html, body {
+height:100%;
+}
+body {
+background-color:Gainsboro;
+}
+img {
+margin:0;
+padding:0;
+}
+#content {
+height:auto !important;
+min-height:100%;
+position:relative;
+background-color:white;
+margin-left:16px;
+margin-right:16px;
+}
+#footer {
+bottom:0;
+height:20px;
+margin-top:-20px;
+padding:0;
+position:absolute;
+width:100%;
+}
+a {
+color:black;
+font-family:arial;
+font-size:15px;
+text-decoration:none;
+}
+p {
+padding-bottom:3px;
+}
+div.header {
+background-color:#444;
+background-repeat:no-repeat;
+height:64px;
+}
+div.main {
+width:92%;
+color:#666;
+margin-left:20px;
+padding-bottom:40px;
+padding-top:20px;
+overflow:hidden;
+}
+/*Колонка с ссылками слева*/
+div.column {
+float:left;
+left:120px;
+padding-top:15px;
+width:300px;
+}
+div.column a.branches {
+background-color:#FFFFFF;
+margin-bottom:5px;
+margin-left:10px;
+}
+div.column a.branches:hover {
+background-color:#666666;
+color:#FFFFFF;
+display:block;
+padding:2px;
+text-decoration:none;
+}
+/*конец колонки с ссылками слева*/
+
+
+div.menu_main {
+border-bottom:2px solid;
+}
+a.main_menu_link {
+padding-top:10px;
+}
+div.element {
+border-top:1px solid;
+padding-left:15px;
+padding-top:10px;
+}
+div.element p {
+font-family:Tahoma;
+font-size:17px;
+margin-left:35px;
+}
+a.about {
+color:green;
+font-size:10px;
+}
+/*Коментарии*/
+p.comment_date {
+color:grey;
+font-size:66%;
+}
+div.comment {
+padding-bottom:20px;
+padding-left:90px;
+}
+div.comment a {
+color:#555;
+font-size:14px;
+}
+a.commentator {
+text-decoration:underline;
+}
+/*Конец коментариев*/
+/*Регистрация*/
+p.error {
+color:red;
+}
+/*конец регистрации*/
+
+/*Логинка*/
+#win {
+position:absolute;
+right:10px;
+width:300px;
+}
+.enter {
+color:#ccc;
+margin-right:15px;
+}
+
+.enter a {
+color:#ccc;
+font-family:arial;
+font-size:15px;
+}
+/*конец Логинка*/
+
+/*Меню*/
+.menuKontaktSub {
+   min-height: 19px;
+   color: #ccc;
+   text-align: right;
+   padding-right: 10px;
+}
+
+* html .menuKontaktSub {
+   height: 19px;
+}
+
+.menuKontaktSub ul li {
+   float: left;
+   min-height: 18px;
+   font-weight: bold;
+   font-size: 80%;
+   text-align: center;
+}
+
+* html .menuKontaktSub ul li {
+   height: 18px;
+}
+.menuKontaktSub ul {
+   list-style: none;
+   margin: 0px;
+   padding: 0px;
+}
+.menuKontaktSub ul li.gray {
+   background-color: #333;
+   padding: 2px;
+   color: #fff;
+   min-height: 14px;
+}
+.menuKontaktSub ul li a{
+color:#CCC;
+display:block;
+font-family:verdana,arial,helvetica,sans-serif;
+font-size:13px;
+min-height:14px;
+padding:2px 10px;
+text-decoration:none;
+}
+* html .menuKontaktSub ul li a {
+   height: 14px;
+}
+
+.menuKontaktSub ul li a:hover, .menuKontaktSub ul li a:focus, .menuKontaktSub ul li a:active {
+background-color:#666666;
+color:#FFFFFF;
+display:block;
+}
+/*конец меню*/
+
+#quickSearch {
+position:absolute;
+right:6px;
+top:32px;
+width:112px;
+z-index:1;
+}
+
+/*панелька с функциями каталога, профиль*/
+.bar {
+background-color:#F0F0F0;
+border:1px solid;
+padding:5px;
+display:none;
+z-index:2;
+}
+/*конец панельки с функциями каталога*/
+
+/*каталог, карточки*/
+div.absatz {
+clear:both;
+padding-bottom:6px;
+}
+div.parameter {
+float:left;
+font-size:75%;
+font-weight:bold;
+text-align:left;
+width:9em;
+}
+#data .absatz div.parameter {
+color:#000000;
+float:left;
+font-size:75%;
+font-weight:bold;
+text-align:left;
+width:9em;
+font-family:verdana,arial,helvetica,sans-serif;
+}
+.beschreibung {
+font-size:92%;
+padding-left:9em;
+text-align:left;
+}
+/*конец каталог, карточки*/
+/*каталог, таблица*/
+* html #objektInfo .beschreibung {
+text-indent:-3px;
+}
+#rahmenTablett {
+clear:both;
+min-height:515px;
+text-align:center;
+width:100%;
+}
+* html #rahmenTablett {
+height:50px;
+}
+#rahmenTablett td.tabelement {
+background-color:#FFFFFF;
+border-bottom:1px solid #CCCCCC;
+border-right:1px solid #CCCCCC;
+font-size:80%;
+
+padding-left:4px;
+padding-right:4px;
+padding-top:10px;
+text-align:center;
+width:200px;
+}
+
+#rahmenTablett td.tabelementOn {
+background-color:#eeeeee;
+border-bottom:1px solid #CCCCCC;
+border-right:1px solid #CCCCCC;
+font-size:80%;
+
+padding-left:4px;
+padding-right:4px;
+padding-top:10px;
+text-align:center;
+width:200px;
+}
+
+* html #rahmenTablett div {
+height:180px;
+}
+#rahmenTablett a {
+color:#0099CC;
+text-decoration:none;
+}
+#rahmenTablett a:visited, #rahmenTablett a:focus {
+color:#0099CC;
+}
+#rahmenTablett a:hover {
+color:#666666;
+}
+#rahmenTablett a:active {
+color:#0099CC;
+}
+#rahmenTablett p {
+height:25px;
+margin-bottom:0;
+padding-bottom:0;
+padding-right:5px;
+text-align:right;
+}
+/*конец, каталог, таблица*/
+/*расширенное описание монет*/
+hr.trenner {
+color:#CCCCCC;
+margin:10px 0px 10px 0px;
+}
+/* конец расширенного описания монет*/
+
+/*меню с функциями каталога*/
+#kat_funktion li a {
+color: #888;
+}
+ #kat_funktion li a:focus, #kat_funktion li a:active {
+color:#fff;
+}
+/*конец меню с функциями каталога*/
+
+/*конвертер дат*/
+#keyBoardsContainer input {
+font-size:25px;
+width: 40px;
+height: 40px;
+}
+/*конец, конвертер дат*/
+/*#container {width:600px;margin:0 auto;}*/
+/* 	#content {background-color:#fafafa;border:1px solid #a2b6cb;padding:5px;height:50px;} */
+ul#tabs {font-family:Verdana, Arial;width:900px;font-size:12px;list-style-type:none;padding-bottom:25px;border-bottom:1px solid #fff;margin-bottom:2px;z-index:1;}
+*html ul#tabs {padding-bottom:0;margin-bottom:0;}
+*+html ul#tabs {padding-bottom:0;margin-bottom:0;}
+#tabs li {float:left;height:25px;margin:2px 0px 0px 5px;}
+#tabs li a {display:block;color:#666666;text-decoration:none;padding:5px;}
+#tabs li.nonsel {background-color:#eee;border:1px solid #a2b6cb;}
+#tabs li.nonsel a:hover {background-color:#fff;border-bottom:1px solid #bfe0fe;}
+#tabs li.sel {background-color:#fafafa;border:1px solid;border-color:#a2b6cb #a2b6cb #fafafa #a2b6cb;}
+#content .menu li{float:left;list-style-type:none;padding:0 5px;border-right:1px solid #000;}
+#content .menu li.last{border:none;}

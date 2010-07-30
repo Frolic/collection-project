@@ -1,0 +1,253 @@
+{% extends "main/base.html" %}
+{% load trans_ru %}
+
+{% block title %}Каталог{% endblock %}
+
+{% block header %}
+<SCRIPT TYPE="text/javascript">
+ function index(n) {
+for(i=1;i<=5;i++) {document.getElementById('tab'+i).className='nonsel';
+document.getElementById('cont'+i).style.display='none'}
+document.getElementById('tab'+n).className='sel';
+document.getElementById('cont'+n).style.display='block';
+}
+function img_onclick()
+{
+    var img1 = document.getElementById('img1');
+    var img2 = document.getElementById('img2');
+    var src  = img1.src;
+    img1.src = img2.src;
+    img2.src = src;
+    return false;
+}
+function img_onclickb()
+{
+    var img1b = document.getElementById('img1b');
+    var img2b = document.getElementById('img2b');
+    var src  = img1b.src;
+    img1b.src = img2b.src;
+    img2b.src = src;
+    return false;
+}
+ </SCRIPT>  
+{% endblock %}
+
+{% block main %}
+<div id="container">
+{% if user.is_authenticated %}
+    <div class="element">
+        <form name="IdeaAdder" action="/idea/add_idea" method="post">
+            <div>Добавить своё предложение по программе:</div>
+            Заголовок: <input name="idea_header" id="idea_header" maxlength='250' value="Введите заголовок"></input>
+            <textarea name="idea_text" id="idea_text" wrap="virtual" cols="100" rows="3" style='width: 80%'>Введите вашe предложение...</textarea><br>
+            <input type="submit" value="Отправить"></input>
+        </form>
+    </div>
+{% endif %}
+ <ul id="tabs">
+   <li id="tab1" class="sel"><a href="#" onClick="index(1); return false;"">Основная</a></li>
+   <li id="tab2" class="nonsel"><a href="#" onClick="index(2); return false;">Изображение подробней</a></li>
+   <li id="tab3" class="nonsel"><a href="#" onClick="index(3); return false;">Расширенная информация</a></li>
+   <li id="tab4" class="nonsel"><a href="#" onClick="index(4); return false;">История монеты</a></li>
+   <li id="tab5" class="nonsel"><a href="#" onClick="index(5); return false;">Комментарии</a></li>
+ </ul>
+
+ <div id="content" class="main">
+   <noscript>Javascript выключен. Нашей навороченной менюшки вы не увидите. Однако можете просто кликать по ссылкам.</noscript>
+   <div id="cont1">
+<ul class="menu">
+<div id="tab1"  style="display:block;">
+
+  <div id="foto" style=" float:left; min-height:380px; padding-bottom:20px; position:relative; width:45%;">
+<div id="big_side"><img id="img1" src="{{coin.foto_obverse}}" alt="" height="300" width="300" onclick="return img_onclick();"></div>
+<div id="small_side" style="width:90%;"><a href="" style="color:#fff;" ><img id="img2" src="{{coin.foto_reverse|img_path2url}}" alt="Change side" title="Change side" align="right" height="120" width="120" onclick="return img_onclick();"></a></div>
+<div><img  title="reverse" alt="фото гурта" src="{{coin.main_info.foto_edge}}"></div>
+  </div>
+    <div id="data" style=" float:left; border-left:1px solid #CCCCCC; min-height:640px; padding-bottom:20px; padding-left:20px; position:relative; width:50%;">
+	    {{coin}}.
+    <hr class="trenner"/>
+			<div class="absatz">
+        			<div class="parameter">Номинал:</div>
+        			<div class="beschreibung">{{coin.denomination}}</div>
+    			</div>
+    			<div class="absatz">
+        			<div class="parameter">Страна:</div>
+        			<div class="beschreibung">{{coin.country}}</div>
+    			</div>
+    			<div class="absatz">
+        			<div class="parameter">Серия:</div>
+        			<div class="beschreibung">{{coin.seria}}</div>
+    			</div>
+    			<div class="absatz">
+        			<div class="parameter">Годы чеканки:</div>
+        			<div class="beschreibung">{{coin.years_of_coinage.all|join:", "}}</div>
+    			</div>
+			    <div class="absatz">
+				    <div class="parameter">Тип:</div>
+				    <div class="beschreibung">{{coin.main_info.types}}</div>
+			    </div>
+		      <hr class="trenner"/>
+			    <div class="absatz">
+				    <div class="parameter">Форма:</div>
+				    <div class="beschreibung">{{coin.main_info.form}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Соотношение сторон:</div>
+				    <div class="beschreibung">{{coin.main_info.axis}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Вес:</div>
+				    <div class="beschreibung">{{coin.main_info.weight}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Диаметр:</div>
+				    <div class="beschreibung">{{coin.main_info.diameter}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Толщина:</div>
+				    <div class="beschreibung">{{coin.main_info.thickness}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Качество:</div>
+				    <div class="beschreibung">{{coin.main_info.quality}}</div>
+			    </div>
+    <hr class="trenner"/>
+			  <div class="absatz">
+				  <div class="parameter">Металл:</div>
+				  <div class="beschreibung">{{coin.metal}}</div>
+			  </div>
+			    <div class="absatz">
+				    <div class="parameter">Проба:</div>
+				    <div class="beschreibung">{{coin.main_info.fineness}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Содержание чистого металла:</div>
+				    <div class="beschreibung">{{coin.main_info.fine_metal_contant}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Другие вставки:</div>
+				    <div class="beschreibung">{{coin.main_info.other}}</div>
+			    </div>
+      <hr class="trenner"/>
+			    <div class="absatz">
+				    <div class="parameter">Монетный двор:</div>
+				    <div class="beschreibung">{{coin.main_info.mint}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Знак монетного двора:</div>
+				    <div class="beschreibung">{{coin.main_info.mint_mark}}</div>
+			    </div>
+    <img  title="reverse" alt="изображение знака монетного двора" src="{{coin.main_info.mint_mark_foto}}">
+
+ 
+</div>  </div>  
+</ul>
+
+</div>
+   <div id="cont2" style="display: none;">
+      <div id="small_side" style="width:90%;">
+      <img id="img2b" src="{{coin.foto_reverse|img_path2url}}" alt="Change side" title="Change side" align="right" height="120" width="120" onclick="return img_onclickb();">
+      </div>
+    <div id="big_side">
+      <img id="img1b" src="{{coin.foto_obverse}}" alt=""  onclick="return img_onclickb();">
+    </div>
+
+    </div>
+
+   <div id="cont3" style="display: none;">
+			    <div class="absatz">
+				    <div class="parameter">Тираж UNC:</div>
+				    <div class="beschreibung">{{coin.main_info.mintage_unc}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Тираж Б/А:</div>
+				    <div class="beschreibung">{{coin.main_info.mintage_b_u}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Тираж Proof:</div>
+				    <div class="beschreibung">{{coin.main_info.mintage_proof}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Тираж Proof like:</div>
+				    <div class="beschreibung">{{coin.main_info.mintage_proof_like}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Тираж Reverse frosted:</div>
+				    <div class="beschreibung">{{coin.main_info.mintage_proof_fr}}</div>
+			    </div>
+      <hr class="trenner"/>
+			    <div class="absatz">
+				    <div class="parameter">Художник:</div>
+				    <div class="beschreibung">{{coin.main_info.artist}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Художник аверса:</div>
+				    <div class="beschreibung">{{coin.main_info.ar_of_obverse}}</div>
+			    </div>
+    <img  title="reverse" alt="знак художника аверса" src="{{coin.main_info.ar_ob_mark}}">
+			    <div class="absatz">
+				    <div class="parameter">Художник реверса:</div>
+				    <div class="beschreibung">{{coin.main_info.ar_of_reverse}}</div>
+			    </div>
+    <img  title="reverse" alt="знак художника реверса" src="{{coin.main_info.ar_av_mark}}">
+			    <div class="absatz">
+				    <div class="parameter">Скульптор:</div>
+				    <div class="beschreibung">{{coin.main_info.sculptors}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Скульптор аверса:</div>
+				    <div class="beschreibung">{{coin.main_info.sc_of_obverse}}</div>
+			    </div>
+    <img  title="reverse" alt="знак художника аверса" src="{{coin.main_info.sc_ob_mark}}">
+			    <div class="absatz">
+				    <div class="parameter">Скульптор реверса:</div>
+				    <div class="beschreibung">{{coin.main_info.sc_of_reverse}}</div>
+			    </div>
+    <img  title="reverse" alt="знак художника реверса" src="{{coin.main_info.sc_re_mark}}">
+      <hr class="trenner"/>
+
+			    <div class="absatz">
+				    <div class="parameter">Тематика:</div>
+				    <div class="beschreibung">{{coin.main_info.themes}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Датировка:</div>
+				    <div class="beschreibung">{{coin.main_info.dating}}</div>
+			    </div>
+      <hr class="trenner"/>
+			    <div class="absatz">
+				    <div class="parameter">Описание аверса:</div>
+				    <div class="beschreibung">{{coin.main_info.obverse}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Описание реверса:</div>
+				    <div class="beschreibung">{{coin.main_info.reverse}}</div>
+			    </div>
+			    <div class="absatz">
+				    <div class="parameter">Текст гурта:</div>
+				    <div class="beschreibung">{{coin.main_info.text_edge}}</div>
+			    </div>
+    			<div class="absatz">
+        			<div class="parameter">Год выпуска в обращение:</div>
+        			<div class="beschreibung">{{coin.date_of_issue}}</div>
+    			</div>
+
+
+</div>
+   <div id="cont4" style="display: none;">
+			    <div class="absatz">
+				    <div class="parameter">История:</div>
+				    <div class="beschreibung">{{coin.main_info.history}}</div>
+			    </div>
+
+</div>
+
+   <div id="cont5" style="display: none;">
+				    <div class="absatz">
+				    <div class="parameter">Коментарии:</div>
+				    <div class="beschreibung">{{coin.main_info.comments}}</div>
+			    </div>
+</div>
+ </div>
+</div> 
+{%endblock%}

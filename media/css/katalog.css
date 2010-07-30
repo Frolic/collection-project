@@ -1,0 +1,108 @@
+div.сountry
+{
+margin-left:20px;
+padding-top:5px;
+padding-bottom:5px;
+border-top:1px solid;
+border-bottom:1px solid;
+}
+a.сountry
+{
+}
+a.materic
+{
+color:#000;
+text-decoration: none;
+display:block;
+}
+a.сountry2
+{
+color:Gray;
+text-decoration: none;
+display:block;
+}
+div.сountry2
+{
+color:#000;
+display:block;
+text-decoration: none;
+padding-top:5px;
+margin-top:10px;
+margin-left:20px;
+border-top:1px solid;
+}
+
+div.series
+{
+color:#000;
+display:block;
+text-decoration: none;
+padding-top:5px;
+margin-top:10px;
+margin-left:20px;
+border-top:1px solid;
+}
+
+a.series
+{
+color:Gray;
+text-decoration: none;
+display:block;
+}
+
+div.spisok_lot
+{
+color:#000;
+display:block;
+text-decoration: none;
+padding-top:5px;
+margin-top:10px;
+margin-left:20px;
+border-top:1px solid;
+}
+
+a.spisok_lot
+{
+color:#000;
+display:block;
+text-decoration: none;
+}
+
+div.lot
+{
+color:#000;
+display:block;
+text-decoration: none;
+padding-top:5px;
+margin-top:10px;
+margin-bottom:10px;
+margin-left:20px;
+border-top:1px solid;
+}
+
+div.flex_header
+{
+display:block;
+background-color:gainsboro;
+background-repeat:no-repeat;
+border-top:1px solid #B1BDD6;
+height:23px;
+padding:3px 8px 3px 23px;
+}
+.flex_header div
+{
+float:left;
+}
+div.flex_add
+{
+float:right;
+font-weight:bold;
+}
+
+div.flex_delete
+{
+color:red;
+float:right;
+font-weight:bold;
+}
+
